@@ -18,4 +18,4 @@ Example:
                
 computes the coefficient for the supergraphs for the first 10 projects.
 
-Note that computation of coefficients is successfull only for a subset of the graphs (as stated in the paper), and it can take much time for the bigger graphs.
+Note that computation of coefficients is not always successfull (as stated in the paper), and it can take much time for big graphs.

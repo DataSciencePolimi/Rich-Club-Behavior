@@ -134,11 +134,11 @@ if __name__ == '__main__':
                 G = get_commits_graph(path)
             
             rc = nx.algorithms.richclub.rich_club_coefficient(G, normalized=True)
-            k, phi = get_lists(rc)
+            k, rho = get_lists(rc)
             
             rcc[p] = {}
             rcc[p]['k'] = k
-            rcc[p]['phi'] = phi
+            rcc[p]['rho'] = rho
         except Exception as e:
             print('Cannot calculate coefficient for this project: {}'.format(p))
         
