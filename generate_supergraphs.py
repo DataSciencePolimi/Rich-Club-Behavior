@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import snap
+from tqdm import tqdm
 
 def generateTables(targetpath, netfile, net):
     #split file into node and edge file
@@ -31,7 +32,7 @@ projects = pd.read_csv('project.csv')
 projects['mappedname'] = projects['name'].apply(lambda x: x.replace('/', '__').replace('-', '_'))
 
 N = projects.shape[0]
-for index, row in projects.iterrows():
+for index, row in tqdm(projects.iterrows()):
 
     # Git commits graph
     pname = row['mappedname']
@@ -86,5 +87,3 @@ for index, row in projects.iterrows():
     name = str(pid) + '_usergraph'
     snap.SaveEdgeListNet(net, outpath + name + '.csv', 'Network of issues, PR and commits')
     generateTables(outpath, name, net)
-    
-    print('Completion: {:.0f}%'.format(float(index)*100/N))

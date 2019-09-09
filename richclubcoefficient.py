@@ -4,6 +4,7 @@ import snap
 import json
 import argparse
 import sys
+from tqdm import tqdm
 
 sourcepath = 'graphs/'
 outpath = 'coefficients/'
@@ -84,8 +85,8 @@ def get_commits_graph(path):
         return G
     
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Replicability package. Rich-club coefficient computation.')
-    parser.add_argument('--graphtype', type=str, default='G', help='Source graph for coefficient computation')
+    parser = argparse.ArgumentParser(description='Rich-club coefficient calculation.')
+    parser.add_argument('--graph', type=str, default='G', help='Source graph for coefficient computation')
     parser.add_argument('--N', type=int, default=20, help='Number of projects for which compute the coefficient')
     
     
@@ -98,16 +99,16 @@ if __name__ == '__main__':
     rcc = {}
     
     # select path for source graphs
-    if args.graphtype == 'G':
+    if args.graph == 'G':
         path = sourcepath + 'supergraphs/'
         outname = 'supergraph'
-    elif args.graphtype == 'i':
+    elif args.graph == 'i':
         path = sourcepath + 'issues/'
         outname = 'issues'
-    elif args.graphtype == 'p':
+    elif args.graph == 'p':
         path = sourcepath + 'pullrequests/'
         outname = 'pullrequests'
-    elif args.graphtype == 'c':
+    elif args.graph == 'c':
         path = sourcepath + 'commits/'
         outname = 'commits'
     else:
@@ -115,37 +116,34 @@ if __name__ == '__main__':
         sys.exit(1)
     
     num = projects.shape[0]
-    for index, row in projects.iterrows():
+    for index, row in tqdm(projects.iterrows()):
         p = str(row['id'])
         pname = row['name']
         
         try:
-            if args.graphtype == 'G':
+            if args.graph == 'G':
                 G = get_supergraph(path)
-                
-            elif args.graphtype == 'i':
+               
+            elif args.graph == 'i':
                 G = get_activity_graph(path, 'is')
             
-            elif args.graphtype == 'p':
+            elif args.graph == 'p':
                 G = get_activity_graph(path, 'pr')
                 
-            elif args.graphtype == 'c':
+            elif args.graph == 'c':
                 G = get_commits_graph(path)
             
             rc = nx.algorithms.richclub.rich_club_coefficient(G, normalized=True)
-            x1, y1 = get_lists(rc)
+            k, phi = get_lists(rc)
             
             rcc[p] = {}
-            rcc[p]['k'] = x1
-            rcc[p]['phi'] = y1
+            rcc[p]['k'] = k
+            rcc[p]['phi'] = phi
         except Exception as e:
-            pass
             print('Cannot calculate coefficient for this project: {}'.format(p))
         
-        print('Completion: {:.0f}%'.format(float(index)*100/num))
         
-        
-    # for each projects a dictionary {k:[], rho:[]} is defined with the list of degrees and correspondent coefficient values
+    # for each project a dictionary {k:[], rho:[]} is defined with the list of degrees and correspondent coefficient values
     with open(outpath + 'rcc_{}.json'.format(outname), 'w') as fp:
         json.dump(rcc, fp)
                     
