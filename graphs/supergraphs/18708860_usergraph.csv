@@ -1,0 +1,47 @@
+# Directed network: graphs/supergraphs/18708860_usergraph.csv 
+# Network of issues, PR and commits
+# Nodes: 18 Edges: 22
+#NODES	NId	Str:username
+0	paulirish
+1	rabellamy
+2	marocchino
+3	hi@rafalchmiel.com
+4	whatthejeff
+5	channprj
+6	Aurif3x
+7	metavige
+8	appleboy
+9	szepeviktor
+10	yang-wei
+11	rafalchmiel
+12	makomi
+13	tiimgreen
+14	hkdobrev
+15	FlintyLemming
+16	rwst
+17	ad-m
+#END
+#EDGES	SrcNId	DstNId
+0	1
+2	3
+4	5
+4	6
+4	7
+8	7
+9	10
+11	12
+10	9
+12	11
+13	14
+13	15
+13	16
+13	17
+14	13
+14	16
+15	13
+15	17
+17	15
+17	13
+16	13
+16	14
+#END
