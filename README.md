@@ -1,7 +1,10 @@
 ## Rich Club Behavior
 
-Scripts to calculate rich-club coefficients are included, as well as to generate the supergraphs from source interaction graphs (Github activities: commits, PR, issues). More details in the paper: "Analyzing Rich-Club Behavior in Open Source Projects".
+Scripts to calculate rich-club coefficients are included, as well as to generate the supergraphs from source interaction graphs (Github activities: commits, PR, issues). 
+
+More details in the paper: ["Analyzing Rich-Club Behavior in Open Source Projects"](https://dl.acm.org/citation.cfm?id=3340825).
 The complete dataset to reproduce the results is available here: https://doi.org/10.7910/DVN/AA4IIS
+
 
 In order to use the code, please install all the dependencies:
 - Main dependencies are defined in _requirements.txt_ file
